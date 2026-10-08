@@ -1,4 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { Reflector } from '@nestjs/core'
 import { IS_PUBLIC_KEY } from '@/decorators/public.decorator'
@@ -20,5 +25,14 @@ export class JwtGuard extends AuthGuard('jwt') implements CanActivate {
     }
 
     return super.canActivate(context)
+  }
+
+  handleRequest(error: any, user: any): any {
+    console.log(user, 'user')
+    if (error || !user) {
+      throw new UnauthorizedException('登录凭证无效或已过期')
+    }
+
+    return user
   }
 }

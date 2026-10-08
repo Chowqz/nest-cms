@@ -6,14 +6,21 @@ import {
   Patch,
   Param,
   Delete,
+  Inject,
+  LoggerService,
 } from '@nestjs/common'
 import { UserService } from './user.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston'
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    @Inject(WINSTON_MODULE_NEST_PROVIDER)
+    private readonly logger: LoggerService,
+  ) {}
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
@@ -22,7 +29,6 @@ export class UserController {
 
   @Get()
   findAll() {
-    throw new Error('something wrong')
     return this.userService.findAll()
   }
 
