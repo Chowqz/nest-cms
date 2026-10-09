@@ -28,7 +28,6 @@ export class JwtGuard extends AuthGuard('jwt') implements CanActivate {
   }
 
   handleRequest(error: any, user: any): any {
-    console.log(user, 'user')
     if (error || !user) {
       throw new UnauthorizedException('登录凭证无效或已过期')
     }

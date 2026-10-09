@@ -6,12 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
   Inject,
   LoggerService,
 } from '@nestjs/common'
 import { UserService } from './user.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
+import { ListUserDto } from './dto/list-user.dto'
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston'
 
 @Controller('user')
@@ -28,8 +30,8 @@ export class UserController {
   }
 
   @Get()
-  findAll() {
-    return this.userService.findAll()
+  findAll(@Query() query: ListUserDto) {
+    return this.userService.findAll(query)
   }
 
   @Get(':id')

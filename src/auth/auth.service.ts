@@ -4,6 +4,7 @@ import { UserService } from '../user/user.service'
 import * as argon2 from 'argon2'
 import { BusinessException } from '../exceptions/business.exception'
 import { JwtService } from '@nestjs/jwt'
+import { RoleType } from '@/enum/user.enum'
 
 @Injectable()
 export class AuthService {
@@ -35,6 +36,9 @@ export class AuthService {
     if (user) {
       throw new BusinessException('用户已存在')
     }
-    return await this.userService.create(dto)
+    return this.userService.create({
+      ...dto,
+      roleId: RoleType.NORMAL,
+    })
   }
 }

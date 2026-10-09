@@ -20,7 +20,7 @@ import { JwtStrategy } from './jwt.strategy'
         return {
           secret: configService.get<string>(ConfigEnum.SECRET),
           signOptions: {
-            expiresIn: '1d',
+            expiresIn: '30d',
           },
         }
       },

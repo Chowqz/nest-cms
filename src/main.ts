@@ -9,7 +9,7 @@ import { HttpLoggingInterceptor } from './interceptors/http-logging.interceptor'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER))
-  app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(new ValidationPipe({ transform: true }))
   app.useGlobalInterceptors(
     new HttpLoggingInterceptor(),
     new TransformInterceptor(),
